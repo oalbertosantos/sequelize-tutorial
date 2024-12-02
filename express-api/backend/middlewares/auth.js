@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers['authorization'];
+  const token = req.cookies.token || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
 
   if (!token) {
     return res.status(401).send('É necessário estar autenticado para acessar esta rota');

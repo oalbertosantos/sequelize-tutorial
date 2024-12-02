@@ -81,7 +81,7 @@ const login = [
        // Envia o token como um cookie
        res.cookie('token', token, {
         httpOnly: true, // O cookie não pode ser acessado via JavaScript
-        secure: false, // Só envia o cookie em HTTPS
+        secure: process.env.NODE_ENV === 'production', // Só envia o cookie em HTTPS
         maxAge: 24 * 60 * 60 * 1000, // O cookie expira após 24 horas
         sameSite: 'strict', // Adiciona uma política de segurança
       });

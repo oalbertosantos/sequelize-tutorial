@@ -3,6 +3,7 @@ import { Form, Button, Image } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
+
 export default function ProductForm() {
   const [product, setProduct] = useState({
     name: '',
@@ -19,10 +20,16 @@ export default function ProductForm() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetchCategories()
-    if (id) {
-      fetchProduct()
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login', { state: { error: 'Você precisa estar autenticado para acessar esta página.' } });
+    } else {
+      fetchCategories()
+      if (id) {
+        fetchProduct()
+      }
     }
+   
   }, [id])
 
   const fetchCategories = async () => {
