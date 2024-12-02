@@ -13,8 +13,7 @@ export default function Login() {
   useEffect(() => {
     if (location.state && location.state.error) {
       setError(location.state.error);
-      // Limpa o estado de erro após exibir a mensagem
-      navigate(location.pathname, { replace: true, state: {} });
+      navigate(location.pathname, { replace: true, state: {} }); // Limpa erro após exibir
     }
   }, [location.state, navigate, location.pathname]);
 
@@ -25,11 +24,25 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3335/api/v1/auth/login', credentials);
-      localStorage.setItem('token', response.data.token);
-      navigate('/categories');
+      // Fazendo o login e recebendo o cookie automaticamente
+      const response = await axios.post(
+        'http://localhost:3335/api/v1/auth/login',
+        credentials,
+        { withCredentials: true } // Permite que o cookie seja enviado e recebido
+      );
+
+      // Verifica se a resposta foi bem-sucedida
+      if (response.status === 200) {
+        navigate('/categories'); // Redireciona após login bem-sucedido
+      } else {
+        setError('Login failed.');
+      }
     } catch (error) {
-      setError('Login failed. Please check your credentials.');
+      if (error.response && error.response.data) {
+        setError(error.response.data.message || 'Login failed. Please check your credentials.');
+      } else {
+        setError('An unexpected error occurred.');
+      }
     }
   };
 
@@ -40,13 +53,27 @@ export default function Login() {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" name="username" value={credentials.username} onChange={handleChange} required />
+          <Form.Control
+            type="text"
+            name="username"
+            value={credentials.username}
+            onChange={handleChange}
+            required
+          />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" name="password" value={credentials.password} onChange={handleChange} required />
+          <Form.Control
+            type="password"
+            name="password"
+            value={credentials.password}
+            onChange={handleChange}
+            required
+          />
         </Form.Group>
-        <Button variant="primary" type="submit">Login</Button>
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
       </Form>
     </div>
   );

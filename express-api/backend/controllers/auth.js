@@ -83,6 +83,7 @@ const login = [
         httpOnly: true, // O cookie não pode ser acessado via JavaScript
         secure: process.env.NODE_ENV === 'production', // Só envia o cookie em HTTPS
         maxAge: 24 * 60 * 60 * 1000, // O cookie expira após 24 horas
+        sameSite: 'strict', // Adiciona uma política de segurança
       });
 
       // Não precisamos enviar o token no corpo da resposta, pois ele já foi enviado como cookie
