@@ -33,7 +33,7 @@ export default function Login() {
 
       // Verifica se a resposta foi bem-sucedida
       if (response.status === 200) {
-        navigate('/categories'); // Redireciona após login bem-sucedido
+        navigate('/v1/categories'); // Redireciona após login bem-sucedido
       } else {
         setError('Login failed.');
       }

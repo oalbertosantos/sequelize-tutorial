@@ -10,6 +10,31 @@ const authMiddleware = require('../middlewares/auth');
  * @param {*} res
  * @returns Object
  */
+
+/**
+ * @swagger
+ * /categories:
+ *   post:
+ *     summary: Cria uma nova categoria
+ *     tags: [Categories]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nome da categoria
+ *     responses:
+ *       201:
+ *         description: Categoria criada com sucesso
+ *       500:
+ *         description: Erro no servidor
+ */
+
+
 const createCategory = async (req, res) => {
   try {
     const category = await Category.create({...req.body, id: uuidv4()});

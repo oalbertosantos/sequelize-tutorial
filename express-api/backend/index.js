@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 
 // Obtenha a URI do ambiente
 const env = process.env.NODE_ENV || 'development';
@@ -13,3 +13,4 @@ mongoose.connect(config.uri, {
 }).catch((error) => {
   console.error('Erro ao conectar ao MongoDB:', error.message);
 });
+*/
